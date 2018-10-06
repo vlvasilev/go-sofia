@@ -27,7 +27,12 @@ func main() {
 
 	go func() {
 		log.Print("The application server is preparing tohandle connection...")
-		err := http.ListenAndServe(":"+blPort, router)
+		server := http.Server{
+			Addr:    ":" + blPort,
+			Handler: router,
+		}
+		err := server.ListenAndServe()
+		//server.Shutdown()
 		if err != nil {
 			log.Fatal(err)
 		}
